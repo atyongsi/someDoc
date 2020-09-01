@@ -1,3 +1,12 @@
+--创建表空间，指定数据存放位置
+CREATE tablespace MY_TABLESPACE datafile 'C:\software\oracle_data_store\MY_TABLESPACE.dbf' size 100M autoextend on next 10M maxsize unlimited;
+--创建用户
+CREATE USER wys IDENTIFIED BY admin1000 --用户密码
+DEFAULT tablespace MY_TABLESPACE -- 表空间是上面创建的
+temporary tablespace TEMP -- 临时表空间默认 TEMP;
+--用户授权，普通用户可以不加dba
+grant connect,resource,dba to wys;
+
 --查看表空间使用情况
 SELECT a.tablespace_name "表空间名称", 
 total / (1024 * 1024) "表空间大小(M)", 
