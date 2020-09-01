@@ -1,0 +1,24 @@
+#!/bin/bash
+
+path_hadoop=/opt/software/hadoop-3.3.0
+path_zookeeper=/opt/software/zookeeper-3.6.1
+path_kafka=/opt/software/kafka-2.6.0
+
+# 集群停止时，先停kafka,hbase,再停它们依赖的zookeeper
+echo "================ kafka stop..... ==============="
+ssh mamba101 "source /etc/profile && $path_kafka/bin/kafka-server-stop.sh";
+ssh mamba102 "source /etc/profile && $path_kafka/bin/kafka-server-stop.sh";
+ssh mamba103 "source /etc/profile && $path_kafka/bin/kafka-server-stop.sh";
+
+sleep 3
+
+echo "================= zookeeper stop.....=============="
+for num in 101 102 103
+do
+        ssh mamba$num "source /etc/profile;source ~/.bash_profile;$path_zookeeper/bin/zkServer.sh stop"
+done
+
+echo "================ hadoop DFS stop.....  ==============="
+ssh mamba101 "$path_hadoop/sbin/stop-dfs.sh"
+echo "================ hadoop YARN stop..... ==============="
+ssh mamba102 "$path_hadoop/sbin/stop-yarn.sh"

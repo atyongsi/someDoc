@@ -1,0 +1,30 @@
+#!/bin/bash
+
+path_hadoop=/opt/software/hadoop-3.3.0
+path_zookeeper=/opt/software/zookeeper-3.6.1
+path_kafka=/opt/software/kafka-2.6.0
+
+echo "================ hadoop DFS start..... ==============="
+ssh mamba101 "$path_hadoop/sbin/start-dfs.sh"
+echo "================ hadoop YARN start..... ==============="
+ssh mamba102 "$path_hadoop/sbin/start-yarn.sh"
+
+echo "================ zookeeper start..... ==============="
+for num in 101 102 103
+do
+        ssh mamba$num "source /etc/profile;source ~/.bash_profile;$path_zookeeper/bin/zkServer.sh start"
+done
+
+sleep 3
+
+echo "================ kafka start..... ==============="
+for num in 101 102 103
+do          
+        ssh mamba$num "source /etc/profile;source ~/.bash_profile;$path_kafka/bin/kafka-server-start.sh -daemon $path_kafka/config/server.properties"
+done 
+    
+for num in 101 102 103
+do
+        echo "================= mamba$num ——jps ================="
+        ssh mamba$num "source /etc/profile;source ~/.bash_profile; jps"
+done
