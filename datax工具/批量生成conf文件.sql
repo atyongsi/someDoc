@@ -17,14 +17,14 @@ SELECT
       "reader": {
           "name": "oraclereader",
           "parameter": {
-            "username": "GHZGG45",
-            "password": "GHZGG45",
+            "username": "${o32_user}",
+            "password": "${o32_pswd}",
             "connection": [{
               "querySql": [
                 "SELECT ' || rtrim(xmlagg(xmlparse(content a.COL_NAME_TEMP||',' wellformed) ORDER BY COLUMN_ID).getclobval(),',') ||' FROM ' || a.TABLE_NAME || '"
               ],
               "jdbcUrl": [
-                "jdbc:oracle:thin:@192.168.100.133:1521:orcl"
+                "${o32_url}"
               ]
             }]
           }
