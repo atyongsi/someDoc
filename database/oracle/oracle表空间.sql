@@ -1,3 +1,5 @@
+-- 常用系统表：USER_TAB_COLS,USER_TABLES,USER_TAB_COMMENTS,USER_COL_COMMENTS
+
 --创建表空间，指定数据存放位置
 CREATE tablespace MY_TABLESPACE datafile 'C:\software\oracle_data_store\MY_TABLESPACE.dbf' size 100M autoextend on next 10M maxsize unlimited;
 --创建用户
