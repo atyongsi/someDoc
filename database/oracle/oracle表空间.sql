@@ -31,6 +31,15 @@ SELECT FILE_NAME "文件路径",
 TABLESPACE_NAME "表空间名字",
 AUTOEXTENSIBLE "是否自动增长" FROM dba_data_files;
 
+SELECT
+	file_name 物理文件名,
+	tablespace_name 表空间,
+	bytes / 1024 / 1024 / 1024 大小 G 
+FROM
+	dba_data_files WHERE tablespace_name = 'GHDW' 
+GROUP BY
+	file_name,tablespace_name,bytes
+
 --设置表空间自动增长
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON;//打开自动增长
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON NEXT 200M ;//每次自动增长200M
