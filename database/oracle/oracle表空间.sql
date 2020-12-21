@@ -26,24 +26,33 @@ FROM dba_data_files
 GROUP BY tablespace_name) b 
 WHERE a.tablespace_name = b.tablespace_name
 
---查看表空间是否自动增长
-SELECT FILE_NAME "文件路径",
-TABLESPACE_NAME "表空间名字",
-AUTOEXTENSIBLE "是否自动增长" FROM dba_data_files;
-
 SELECT
 	file_name 物理文件名,
 	tablespace_name 表空间,
-	bytes / 1024 / 1024 / 1024 大小 G 
+	bytes / 1024 / 1024 / 1024 大小G 
 FROM
 	dba_data_files WHERE tablespace_name = 'GHDW' 
 GROUP BY
 	file_name,tablespace_name,bytes
 
+--查看表空间是否自动增长
+SELECT FILE_NAME "文件路径",
+TABLESPACE_NAME "表空间名字",
+AUTOEXTENSIBLE "是否自动增长" FROM dba_data_files;
+
 --设置表空间自动增长
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON;//打开自动增长
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON NEXT 200M ;//每次自动增长200M
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON NEXT 200M MAXSIZE 1024M;//每次自动增长200M，表空间最大不超过1G
+
+ORA-01652：临时表空间不足
+--所有表空间查看
+select * from dba_tablespaces;
+--临时表空间查看
+select * from dba_temp_files;
+--临时表空间自动增长
+alter database tempfile '/oradata/efss/temp01.dbf' autoextend on next 100m;
+
 
 
 --批量清空某一类型的表
