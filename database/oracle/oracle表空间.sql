@@ -55,15 +55,6 @@ alter database tempfile '/oradata/efss/temp01.dbf' autoextend on next 100m;
 
 
 
---批量清空某一类型的表
-DECLARE
-  CURSOR CUR_TRUNC IS
-    SELECT TABLE_NAME FROM USER_TABLES WHERE table_name LIKE 'ODS_AMS_%';
-BEGIN
-  FOR CUR_DEL IN CUR_TRUNC LOOP
-    EXECUTE IMMEDIATE 'truncate table ' || CUR_DEL.TABLE_NAME;
-  END LOOP;
-END;
 
 
 
