@@ -54,3 +54,36 @@ grant read,write on directory DMP_GHDW to sys;
 注：以上命令在plsql中执行，在linux环境下执行无效。
 4）、执行导出命令（directory=DMPDIR，文件夹使用之前别人建过的，确认确实存在该文件夹即可。）
 expdp GHDW/GHDW@172.16.11.17/PDBTEST2  directory=DMPDIR dumpfile=GHDW20201216.dmp logfile=GHDW20201216.log
+
+-- 生成sql脚本,对VARCHAR/VARCHAR2类型的字段扩容2倍
+SELECT
+	'alter table ' || a.TABLE_NAME || ' modify ' || a.COLUMN_NAME || ' VARCHAR2(' || a.data_length * 2 || ');' 
+FROM
+	USER_TAB_COLUMNS a 
+WHERE
+	a.DATA_TYPE = 'VARCHAR2' 
+	AND a.TABLE_NAME = upper( 'AA' )
+;
+
+-- 生成sql脚本,批量把DATE类型修改成VARCHAR2(8)
+SELECT
+	'alter table ' || a.TABLE_NAME || ' modify ' || '( ' || a.COLUMN_NAME || ' VARCHAR2(8) );' 
+FROM
+	USER_TAB_COLUMNS a 
+WHERE
+	a.DATA_TYPE = 'DATE' 
+;
+
+-- 生成sql脚本,批量增加 etl_time 字段
+SELECT
+	'alter table ' || a.TABLE_NAME || ' add etl_time DATE DEFAULT SYSDATE;' 
+FROM
+	USER_TAB_COLUMNS a 
+GROUP BY
+	a.TABLE_NAME
+;
+
+
+
+
+
