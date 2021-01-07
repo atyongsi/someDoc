@@ -12,9 +12,6 @@
 cd $ORACLE_HOME #进入到oracle的安装目录 
 dbstart #重启服务器 
 lsnrctl start #重启监听器 
-cd $ORACLE_HOME #进入到oracle的安装目录
-dbstart #重启服务器
-lsnrctl start #重启监听器
 
 方法2：
 cd $ORACLE_HOME/bin #进入到oracle的安装目录 
