@@ -28,6 +28,13 @@ where a.paddr=b.addr and a.sid=33    --33就是上面的sid
 -- sid：表示要杀死的进程属于的实例名   thread：是要杀掉的线程号，即第3步查询出的spid。
 
 
+ORA-01652：临时表空间不足
+--所有表空间查看
+select * from dba_tablespaces;
+--临时表空间查看
+select * from dba_temp_files;
+--临时表空间自动增长
+alter database tempfile '/oradata/efss/temp01.dbf' autoextend on next 100m;
 
 
 

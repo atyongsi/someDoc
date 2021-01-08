@@ -127,13 +127,7 @@ ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND 
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON NEXT 200M ;//每次自动增长200M
 ALTER DATABASE DATAFILE '/表空间路径/表空间文件名称.dbf' AUTOEXTEND ON NEXT 200M MAXSIZE 1024M;//每次自动增长200M，表空间最大不超过1G
 
-ORA-01652：临时表空间不足
---所有表空间查看
-select * from dba_tablespaces;
---临时表空间查看
-select * from dba_temp_files;
---临时表空间自动增长
-alter database tempfile '/oradata/efss/temp01.dbf' autoextend on next 100m;
+
 
 
 
